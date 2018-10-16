@@ -37,8 +37,9 @@
               <span class="sr-only">(current)</span>
             </a>
           </li>
+          </ul>
 @endif
- </ul>
+ 
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth

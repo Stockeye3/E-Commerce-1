@@ -37,7 +37,7 @@ class ProductsController extends Controller {
             'price' => 'required',
             'qty' => 'required',
             'photo' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'visible' => 'required'
         ]);
 
@@ -54,8 +54,8 @@ class ProductsController extends Controller {
 
     public function edit($id) {
         $product = Product::find($id);
-
-        return view('products.edit', compact('product'));
+        $categories = Category::all();
+        return view('products.edit', compact('product','categories'));
     }
 
     public function update(Request $request, $id) {
@@ -65,7 +65,7 @@ class ProductsController extends Controller {
             'price' => 'required',
             'qty' => 'required|integer',
             'photo' => 'required',
-            'category' => 'required',
+            'category_id' => 'required',
             'visible' => 'required'
         ]);
 
@@ -75,7 +75,7 @@ class ProductsController extends Controller {
         $product->price = $request->get('price');
         $product->qty = $request->get('qty');
         $product->photo = $request->get('photo');
-        $product->category = $request->get('category');
+        $product->category_id = $request->get('category_id');
         $product->visible = $request->get('visible');
         $product->save();
 

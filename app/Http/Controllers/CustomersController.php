@@ -16,7 +16,7 @@ class CustomersController extends Controller
     }
 
     public function create() {
-        return view('customers.create');
+        return view('customer.register');
     }
 
     public function store(Request $request) {
@@ -29,10 +29,10 @@ class CustomersController extends Controller
             'password' => 'required',
         ]);
 
-        auth()->user()->publish(
-                new Customer(request(['fname','lname','password', 'email', 'address', 'phone']))
-        );
-        return redirect('/admin/dashboard');
+       
+                $customer = new  Customer(request(['fname','lname','phone', 'address', 'email','password']));
+                $customer->save();
+        return redirect('/');
     }
 
     public function show($id) {

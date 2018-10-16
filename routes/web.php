@@ -25,7 +25,7 @@ Route::patch('customer/{customer}/ban', 'CustomersController@ban');
 Route::patch('customer/{customer}/unban', 'CustomersController@unban');
 
 
-
+Route::resource('cart','CartsController');
 Route::resource('product','ProductsController');
 Route::get('admin/dashboard', 'UserController@dashboard');
 //Route::get('/users/{user}', 'UserController@show');

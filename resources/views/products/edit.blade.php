@@ -37,6 +37,17 @@
           <label for="price">Price :</label>
           <input type="text" class="form-control" name="price" value={{$product->price}} />
         </div>
+         <div class="form-group">
+         <select name="category_id">
+             @foreach($categories as $category)
+             @if($category->id == $product->category_id)
+                <option name="category_id" value="{{$category->id}}" selected>{{$category->name}}</option>
+             @else 
+                <option name="category_id" value="{{$category->id}}" >{{$category->name}}</option>
+             @endif
+                @endforeach
+         </select>
+        </div>
         <div class="form-group">
           <label for="visible">visibility :</label>
           <select name="visible">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Category;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller {
@@ -13,8 +14,16 @@ class ProductsController extends Controller {
 
     public function index() {
 //        $products = Product::orderBy('qty','desc')->get();
-        $products = Product::where('visible', true )->get();
-        return view('products.index', compact('products'));
+//        $max = Category::Max('id');
+//        $maxi = $max->id;
+//                for ( $i=1; $i<= 2 ; $i++){
+//            
+//            $products[$i] = Product::where('category_id', '=' , $i)
+//                ->where('visible', true )->get();
+        $categories = Category::all();
+        $products = Product::all();
+
+        return view('products.index', compact('products','categories'));
     }
 
     public function create() {
@@ -28,11 +37,12 @@ class ProductsController extends Controller {
             'price' => 'required',
             'qty' => 'required',
             'photo' => 'required',
+            'category' => 'required',
             'visible' => 'required'
         ]);
 
         auth()->user()->publish(
-                new Product(request(['name','description', 'price', 'qty', 'Photo', 'visible']))
+                new Product(request(['name','description', 'price', 'qty', 'Photo', 'category', 'visible']))
         );
         return redirect('/admin/dashboard');
     }
@@ -55,6 +65,7 @@ class ProductsController extends Controller {
             'price' => 'required',
             'qty' => 'required|integer',
             'photo' => 'required',
+            'category' => 'required',
             'visible' => 'required'
         ]);
 
@@ -64,6 +75,7 @@ class ProductsController extends Controller {
         $product->price = $request->get('price');
         $product->qty = $request->get('qty');
         $product->photo = $request->get('photo');
+        $product->category = $request->get('category');
         $product->visible = $request->get('visible');
         $product->save();
 

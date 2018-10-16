@@ -35,7 +35,7 @@
                 <th> Member Since </th>
                 <th> Status </th>
                 <th> View Orders </th>
-                <th> Change Password </th>
+                <th> Edit Info </th>
                 <th> Delete User </th>
                 <th> Ban User </th>
             </tr>
@@ -53,9 +53,37 @@
                 ?>
                 <td> {{ $status }} </td>
                 <td> <button class="btn btn-success" type="submit">View Orders</button> </td>
-                <td> <button class="btn btn-dark" type="submit">Edit Customer</button>  </td>
-                <td> <button class="btn btn-danger" type="submit">Delete User </button> </td>
-                <td> <button class="btn btn-danger" type="submit">Ban User</button> </td>
+
+                <td> <a href="../customer/{{$customer->id}}/edit"
+                        class="btn btn-dark" type="submit">Edit Info</a></td>
+                <td> <form action="{{ route('customer.destroy', $customer->id)}}" method="post"> 
+                        {{ csrf_field() }}
+                        @method('DELETE')
+                        <button class="btn btn-danger" type="submit">Delete User</button>
+                    </form>
+                </td>
+
+                <td>                              
+                    @if($customer->ban)                 
+
+                    <form method="post"
+                          action="/customer/{{$customer->id}}/unban">
+                        @method('PATCH')
+                        {{ csrf_field() }}
+                        <button  class="btn btn-success" type="submit">Unban User </button>
+
+                    </form>
+                    @else
+                    <form method="post"
+                          action="/customer/{{$customer->id}}/ban">
+                        @method('PATCH')
+                        {{ csrf_field() }}
+                        <button  class="btn btn-danger" type="submit">Ban User </button>
+
+                    </form>
+
+                    @endif
+                </td>
             </tr>
             @endforeach
 
@@ -76,6 +104,7 @@
                 <th> Price </th>
                 <th> Photo </th>
                 <th> Product Created </th>
+                <th> Category # </th>
                 <th> Status </th>
                 <th> Product View </th>
                 <th> Edit Product    </th>
@@ -91,10 +120,11 @@
                 <td> {{ $product->price . " $"}} </td>
                 <td> <img class="pic-1" height="100" width="100" src={{$product->photo}} > </td>
                 <td> {{ $product->created_at->diffForHumans() }} </td>
+                <td> {{ $product->category_id }}</td>
                 <?php
                 $product->visible ? $visibility = 'visible' : $visibility = 'hidden';
                 ?>
-                
+
                 <td> {{ $visibility }} </td>
                 <td> <a href="{{ route('product.show', $product->id)}}" class="btn btn-dark">View Page</a></td>
                 <td>  <a href="{{ route('product.edit', $product->id)}}" class="btn btn-dark">Edit Product</a>  </td>

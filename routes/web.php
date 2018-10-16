@@ -18,7 +18,14 @@
 Auth::routes();
 
 Route::get('/', 'ProductsController@index');
+
+
 Route::resource('customer', 'CustomersController');
+Route::patch('customer/{customer}/ban', 'CustomersController@ban');
+Route::patch('customer/{customer}/unban', 'CustomersController@unban');
+
+
+
 Route::resource('product','ProductsController');
 Route::get('admin/dashboard', 'UserController@dashboard');
 //Route::get('/users/{user}', 'UserController@show');

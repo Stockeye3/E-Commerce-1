@@ -8,7 +8,7 @@ class CustomersController extends Controller
 {
     
      public function __construct() {
-       // $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except('show');
     }
 
     public function index() {
@@ -16,21 +16,21 @@ class CustomersController extends Controller
     }
 
     public function create() {
-        return view('products.create');
+        return view('customers.create');
     }
 
     public function store(Request $request) {
         $this->validate(request(), [
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'qty' => 'required',
-            'photo' => 'required',
-            'visible' => 'required'
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',   
+            'address' => 'required',
+            'password' => 'required',
         ]);
 
         auth()->user()->publish(
-                new Product(request(['name','description', 'price', 'qty', 'Photo', 'visible']))
+                new Customer(request(['fname','lname','password', 'email', 'address', 'phone']))
         );
         return redirect('/admin/dashboard');
     }
@@ -41,42 +41,52 @@ class CustomersController extends Controller
     }
 
     public function edit($id) {
-        $product = Product::find($id);
+        $customer = Customer::find($id);
 
-        return view('products.edit', compact('product'));
+        return view('customer.edit', compact('customer'));
     }
 
     public function update(Request $request, $id) {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'qty' => 'required|integer',
-            'photo' => 'required',
-            'visible' => 'required'
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'ban' => 'required'
         ]);
 
-        $product = Product::find($id);
-        $product->name = $request->get('name');
-        $product->description = $request->get('description');
-        $product->price = $request->get('price');
-        $product->qty = $request->get('qty');
-        $product->photo = $request->get('photo');
-        $product->visible = $request->get('visible');
-        $product->save();
+        $customer = Customer::find($id);
+        $customer->fname = $request->get('fname');
+        $customer->lname = $request->get('lname');
+        $customer->email = $request->get('email');
+//        $customer->password = $request->get('password');
+        $customer->address = $request->get('address');
+        $customer->phone = $request->get('phone');
+        $customer->ban = $request->get('ban');
+        $customer->save();
 
         return redirect('/admin/dashboard');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function ban(Request $request, $id){
+        $customer = Customer::find($id);
+        $customer->ban = true;
+        $customer->save();
+       
+         return redirect('/admin/dashboard');
+    }
+    
+    public function unban(Request $request, $id){
+        $customer = Customer::find($id);
+        $customer->ban = false;
+        $customer->save();
+ 
+         return redirect('/admin/dashboard');
+    }
     public function destroy($id) {
-        $product = Product::find($id);
-        $product->delete();
+        $customer = Customer::find($id);
+        $customer->delete();
 
         return redirect('/admin/dashboard');
     }

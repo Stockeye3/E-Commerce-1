@@ -19,7 +19,11 @@ Auth::routes();
 
 Route::get('/', 'ProductsController@index');
 
-
+Route::prefix('customer')->group(function() {
+   Route::get('/login','Auth\CustomerLoginController@showLoginForm');
+   Route::post('/login', 'Auth\CustomerLoginController@login');
+   Route::get('logout/', 'Auth\CustomerLoginController@logout');
+  });
 Route::resource('customer', 'CustomersController');
 Route::patch('customer/{customer}/ban', 'CustomersController@ban');
 Route::patch('customer/{customer}/unban', 'CustomersController@unban');

@@ -17,6 +17,8 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
+    
+    
 
     /*
     |--------------------------------------------------------------------------
@@ -45,6 +47,11 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+        
+        'customer' => [
+            'driver' => 'session',
+            'provider' => 'customers',
+        ],
     ],
 
     /*
@@ -69,6 +76,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+         'customers' => [
+            'driver' => 'eloquent',
+            'model' => App\Customer::class,
+        ],
+        
 
         // 'users' => [
         //     'driver' => 'database',

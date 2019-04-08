@@ -21,6 +21,8 @@ Route::get('/', 'ProductsController@index');
 
 Route::prefix('customer')->group(function() {
    Route::get('/login','Auth\CustomerLoginController@showLoginForm');
+   Route::get('/register','Auth\CustomerLoginController@showRegisterForm');
+   Route::post('/register','CustomersController@store');
    Route::post('/login', 'Auth\CustomerLoginController@login');
    Route::get('logout/', 'Auth\CustomerLoginController@logout');
   });

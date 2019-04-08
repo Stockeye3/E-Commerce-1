@@ -18,33 +18,33 @@
         </ul>
       </div><br />
     @endif
-      <form method="post" action="/customer">
+      <form method="post" action="/customer/register">
         
         {{ csrf_field() }}
         <div class="form-group">
           <label for="fname">First Name:</label>
-          <input type="text" class="form-control" name="fname"  />
+          <input type="text" class="form-control" name="fname"  required />
         </div>
          <div class="form-group">
           <label for="name">Last Name:</label>
-          <input type="text" class="form-control" name="lname"  />
+          <input type="text" class="form-control" name="lname" required />
         </div>
         <div class="form-group">
           <label for="email">email :</label>
-          <input type="text" class="form-control" name="email" />
+          <input type="text" class="form-control" name="email" required />
         </div>
         <div class="form-group">
           <label for="phone">phone :</label>
-          <input type="text" class="form-control" name="phone"  />
+          <input type="text" class="form-control" name="phone"  required />
         </div>
          <div class="form-group">
           <label for="address">Address :</label>
-          <input type="text" class="form-control" name="address"  />
+          <input type="text" class="form-control" name="address"  required />
         </div>
         
         <div class="form-group">
           <label for="password">Password :</label>
-          <input type="password" class="form-control" name="password"  />
+          <input type="password" class="form-control" name="password" required />
         </div>
        
     
